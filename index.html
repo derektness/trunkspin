@@ -42,23 +42,33 @@
     <source src="Coming.mp3" type="audio/mpeg">
   </audio>
 
-  <script>
-    function handleClick() {
-      if (confirm("Leave?")) {
-        window.location.href = "https://avantris.com/shop";
-      }
+<script>
+  const audio = document.getElementById('bgm');
+
+  function handleClick() {
+    if (audio.paused) {
+      audio.play().then(() => {
+        console.log("Audio played after click");
+      }).catch(err => {
+        console.error("Audio play failed after click:", err);
+      });
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const audio = document.getElementById('bgm');
-      audio.play().catch(() => {
-        document.body.addEventListener('click', () => {
-          audio.play();
-        }, { once: true });
-      });
+    if (confirm("Leave?")) {
+      window.location.href = "https://avantris.com/shop";
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    audio.load();
+    audio.play().catch(() => {
+      console.log("Autoplay blocked, waiting for user interaction...");
     });
-  </script>
+  });
+</script>
+
 </body>
 
 </html>
+
 
