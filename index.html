@@ -23,6 +23,10 @@
   <meta property="og:image" content="https://trunkspin.com/Spin.gif">
   <meta property="og:url" content="https://trunkspin.com">
 
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐘</text></svg>"> 
+  <link rel="preload" as="image" href="Spin.gif">
+  <link rel="preload" as="audio" href="Coming.mp3" type="audio/mpeg">
+
   <style>
     html, body {
       margin: 0;
@@ -79,7 +83,7 @@
     <source src="Coming.mp3" type="audio/mpeg" />
   </audio>
 
-  <div id="unmute">
+  <div id="unmute" aria-label="Unmute audio. Tap to play music">
     <svg viewBox="0 0 24 24"><path d="M5 9v6h4l5 5V4l-5 5H5z"/></svg>
     Tap for sound
   </div>
@@ -115,4 +119,5 @@
   </script>
 </body>
 </html>
+
 
