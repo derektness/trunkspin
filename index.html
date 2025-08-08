@@ -33,42 +33,75 @@
     audio {
       display: none;
     }
+    #unmute {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border-radius: 30px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 10;
+      transition: opacity 0.3s ease;
+    }
+
+    #unmute svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+
+    #unmute.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body onclick="handleClick()">
-  <img src="Spin.gif" alt="Spinning elephant">
-
-  <audio id="bgm" autoplay loop>
-    <source src="Coming.mp3" type="audio/mpeg">
+  <img src="Spin.gif" alt="Spinning elephant" />
+  <audio id="bgm" loop>
+    <source src="Coming.mp3" type="audio/mpeg" />
   </audio>
 
-<script>
-  const audio = document.getElementById('bgm');
+  <div id="unmute">
+    <svg viewBox="0 0 24 24"><path d="M5 9v6h4l5 5V4l-5 5H5z"/></svg>
+    Tap for sound
+  </div>
 
-  function handleClick() {
-    if (audio.paused) {
+  <script>
+    const audio = document.getElementById('bgm');
+    const unmute = document.getElementById('unmute');
+    let audioStarted = false;
+
+    function handleClick() {
+      if (!audioStarted) {
+        audio.play().then(() => {
+          audioStarted = true;
+          unmute.classList.add('hidden');
+        }).catch(err => {
+          console.error("Audio play failed:", err);
+        });
+      } else {
+        if (confirm("Leave??")) {
+          window.location.href = "https://avantris.com/shop";
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
       audio.play().then(() => {
-        console.log("Audio played after click");
-      }).catch(err => {
-        console.error("Audio play failed after click:", err);
+        audioStarted = true;
+        unmute.classList.add('hidden');
+      }).catch(() => {
+        console.log("Autoplay blocked, waiting for interaction...");
       });
-    }
-
-    if (confirm("Leave?")) {
-      window.location.href = "https://avantris.com/shop";
-    }
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    audio.load();
-    audio.play().catch(() => {
-      console.log("Autoplay blocked, waiting for user interaction...");
     });
-  });
-</script>
-
+  </script>
 </body>
-
 </html>
-
-
